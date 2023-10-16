@@ -9,13 +9,24 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {stringify} from "querystring";
+import {loginTC} from "./auth-reducer";
+import {useAppDispatch} from "../../app/store";
 
 type ErrorType = {
     password?: string
     email?: string
     // rememberMe?:boolean
 }
+
+
+export type FormType = {
+    password: string
+    email: string
+    rememberMe: boolean
+}
+
 export const Login = () => {
+    const dispatch = useAppDispatch()
 
 const formik = useFormik({
         initialValues: {
@@ -41,8 +52,8 @@ const formik = useFormik({
         console.log('errors: ', errors)
         return errors
     },
-        onSubmit: values => {
-            alert(JSON.stringify(values));
+        onSubmit: async (values) => {
+        const promise = await dispatch(loginTC(values))
             formik.resetForm()
         },
     })
