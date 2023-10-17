@@ -10,7 +10,8 @@ import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {stringify} from "querystring";
 import {loginTC} from "./auth-reducer";
-import {useAppDispatch} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import {Navigate} from "react-router-dom";
 
 type ErrorType = {
     password?: string
@@ -27,6 +28,8 @@ export type FormType = {
 
 export const Login = () => {
     const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+    console.log('4')
 
 const formik = useFormik({
         initialValues: {
@@ -58,6 +61,8 @@ const formik = useFormik({
         },
     })
     console.log(formik.values)
+
+    if (isLoggedIn) return <Navigate to={'/'}/>
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

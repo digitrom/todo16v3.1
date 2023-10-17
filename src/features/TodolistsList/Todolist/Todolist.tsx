@@ -28,6 +28,7 @@ export const Todolist = React.memo(function ({...props}: PropsType) {
     const dispatch = useAppDispatch()
     useEffect(() => {
         const thunk = fetchTasksTC(props.todolist.id)
+        console.log('3')
         dispatch(thunk)
     }, [])
 
